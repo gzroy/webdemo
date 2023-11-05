@@ -24,7 +24,7 @@ pipeline {
     stage("test"){
       steps{
         script{
-          sh 'mvn test"'
+          sh 'mvn test'
         }
       }
     }
