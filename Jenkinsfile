@@ -19,6 +19,16 @@ spec:
       name: "workspace-volume"
       readOnly: false
     workingDir: "/home/jenkins/agent"
+  - name: "maven"
+    image: "maven:3.8.3-openjdk-17"
+    imagePullPolicy: "IfNotPresent"
+    volumeMounts:
+    - mountPath: "/var/run/docker.sock"
+      name: "volume-0"
+      readOnly: true
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
   restartPolicy: "Never"
   securityContext:
     runAsUser: 0
