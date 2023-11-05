@@ -21,6 +21,7 @@ spec:
     workingDir: "/home/jenkins/agent"
   - name: "maven"
     image: "maven:3.8.3-openjdk-17"
+    tty: true
     imagePullPolicy: "IfNotPresent"
     command:
     - cat
