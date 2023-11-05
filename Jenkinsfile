@@ -15,10 +15,10 @@ spec:
     - mountPath: "/var/run/docker.sock"
       name: "volume-0"
       readOnly: true
-    - mountPath: "/home/jenkins/agent"
+    - mountPath: "/home/jenkins"
       name: "workspace-volume"
       readOnly: false
-    workingDir: "/home/jenkins/agent"
+    workingDir: "/home/jenkins"
   - name: "maven"
     image: "maven:3.8.3-openjdk-17"
     tty: true
@@ -30,9 +30,10 @@ spec:
     - mountPath: "/var/run/docker.sock"
       name: "volume-0"
       readOnly: true
-    - mountPath: "/home/jenkins/agent"
+    - mountPath: "/home/jenkins"
       name: "workspace-volume"
       readOnly: false
+    workingDir: "/home/jenkins"
   restartPolicy: "Never"
   securityContext:
     runAsUser: 0
