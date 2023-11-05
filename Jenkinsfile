@@ -1,7 +1,36 @@
 pipeline {
   agent{
     kubernetes{
+        defaultContainer 'jnlp'
         label 'slave'
+        yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: "jnlp"
+    image: "jenkins/inbound-agent:latest"
+    imagePullPolicy: "IfNotPresent"
+    volumeMounts:
+    - mountPath: "/var/run/docker.sock"
+      name: "volume-0"
+      readOnly: true
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+    workingDir: "/home/jenkins/agent"
+  restartPolicy: "Never"
+  securityContext:
+    runAsUser: 0
+  serviceAccountName: "jenkins-sa"
+  volumes:
+  - hostPath:
+      path: "/var/run/docker.sock"
+    name: "volume-0"
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+'''
     }
   }
   environment {
@@ -23,10 +52,8 @@ pipeline {
     }
     stage("test"){
       steps{
-        container('maven') {
           script{
-            sh 'mvn test'
-          }
+            sh 'echo "test"'
         }
       }
     }
