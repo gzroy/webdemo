@@ -24,6 +24,7 @@ spec:
     tty: true
     imagePullPolicy: "IfNotPresent"
     command:
+    - run-jnlp-client 
     - cat
     volumeMounts:
     - mountPath: "/var/run/docker.sock"
