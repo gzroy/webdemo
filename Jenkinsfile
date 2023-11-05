@@ -62,8 +62,10 @@ spec:
     }
     stage("test"){
       steps{
+        container ('maven') {
           script{
-            sh 'echo "testa"'
+            sh 'mvn test'
+          }
         }
       }
     }
