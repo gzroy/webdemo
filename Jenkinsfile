@@ -22,6 +22,8 @@ spec:
   - name: "maven"
     image: "maven:3.8.3-openjdk-17"
     imagePullPolicy: "IfNotPresent"
+    command:
+    - cat
     volumeMounts:
     - mountPath: "/var/run/docker.sock"
       name: "volume-0"
