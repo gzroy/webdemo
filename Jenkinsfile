@@ -53,7 +53,7 @@ spec:
     stage("test"){
       steps{
           script{
-            sh 'echo "test"'
+            sh 'echo "testa"'
         }
       }
     }
