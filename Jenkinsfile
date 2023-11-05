@@ -66,7 +66,7 @@ spec:
       steps{
         container ('maven') {
           script{
-            sh 'mvn test'
+            sh 'mvn test '
           }
         }
       }
