@@ -23,8 +23,10 @@ pipeline {
     }
     stage("test"){
       steps{
-        script{
-          sh 'mvn test'
+        container('maven') {
+          script{
+            sh 'mvn test'
+          }
         }
       }
     }
