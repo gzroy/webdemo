@@ -21,6 +21,11 @@ pipeline {
   }
 
   stages{      
+    stage("Get env") {
+      steps {
+        echo "{env}" 
+      }
+    }
     stage("git checkout") {
         steps {
             script {
