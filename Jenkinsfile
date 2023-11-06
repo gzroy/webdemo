@@ -20,7 +20,12 @@ pipeline {
     PROJECT_ID = "curious-athlete-401708"
   }
 
-  stages{      
+  stages{
+    stage("Get env") {
+      steps {
+        echo "${env}"
+      }
+    }      
     stage("git checkout") {
         steps {
             script {
