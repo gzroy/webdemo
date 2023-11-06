@@ -36,7 +36,7 @@ pipeline {
       steps{
         container('maven') {
           script{
-            sh 'mvn -version'
+            sh 'mvn test'
           }
         }
       }
