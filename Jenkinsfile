@@ -23,6 +23,7 @@ pipeline {
   stages{
     stage("Get env") {
       steps {
+        echo "Print the env!"
         echo "${env}"
       }
     }      
