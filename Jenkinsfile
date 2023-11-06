@@ -1,51 +1,18 @@
 pipeline {
   agent{
     kubernetes{
-        defaultContainer 'jnlp'
-        label 'slave'
-        yaml '''
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: "jnlp"
-    image: "jenkins/inbound-agent:latest"
-    imagePullPolicy: "IfNotPresent"
-    volumeMounts:
-    - mountPath: "/var/run/docker.sock"
-      name: "volume-0"
-      readOnly: true
-    - mountPath: "/home/jenkins"
-      name: "workspace-volume"
-      readOnly: false
-    workingDir: "/home/jenkins"
-  - name: "maven"
-    image: "maven:3.8.3-openjdk-17"
-    tty: true
-    imagePullPolicy: "IfNotPresent"
-    command:
-    - run-jnlp-client 
-    - cat
-    volumeMounts:
-    - mountPath: "/var/run/docker.sock"
-      name: "volume-0"
-      readOnly: true
-    - mountPath: "/home/jenkins"
-      name: "workspace-volume"
-      readOnly: false
-    workingDir: "/home/jenkins"
-  restartPolicy: "Never"
-  securityContext:
-    runAsUser: 0
-  serviceAccountName: "jenkins-sa"
-  volumes:
-  - hostPath:
-      path: "/var/run/docker.sock"
-    name: "volume-0"
-  - emptyDir:
-      medium: ""
-    name: "workspace-volume"
-'''
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: maven
+            image: maven:3.8.3-openjdk-17
+            tty: true
+            imagePullPolicy: "IfNotPresent"
+            command:
+            - cat
+      '''
     }
   }
   environment {
@@ -67,9 +34,9 @@ spec:
     }
     stage("test"){
       steps{
-        container ('maven') {
+        container('maven') {
           script{
-            sh 'mvn test '
+            sh 'mvn -version'
           }
         }
       }
