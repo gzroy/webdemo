@@ -20,12 +20,23 @@ pipeline {
     PROJECT_ID = "curious-athlete-401708"
   }
 
+<<<<<<< HEAD
   stages{      
     stage("Get env") {
       steps {
         echo "{env}" 
       }
     }
+=======
+  stages{
+    stage("Get env") {
+      steps {
+        echo "abc"
+        echo "Print the env!"
+        echo "${env}"
+      }
+    }      
+>>>>>>> 0b27014e3b31158060282c9828956903730f9b0c
     stage("git checkout") {
         steps {
             script {
