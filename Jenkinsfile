@@ -61,7 +61,10 @@ pipeline {
       }
       post {
         failure {
-          echo 'unit test failure!'
+          script {
+            pullRequest.setCredentials('gzroy', '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')
+            pullRequest.addLabel('Build failure')
+          }
         }
         success {
           echo 'unit test success!'
