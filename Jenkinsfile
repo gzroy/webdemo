@@ -61,10 +61,7 @@ pipeline {
       }
       post {
         failure {
-          script {
-            pullRequest.setCredentials('gzroy', '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')
-            pullRequest.addLabel('Build failure')
-          }
+          sh 'curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/gzroy/webdemo/issues/7/comments -d \'{"body":"UT test failure"}\''
         }
         success {
           echo 'unit test success!'
