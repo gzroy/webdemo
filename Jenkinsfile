@@ -12,15 +12,16 @@ pipeline {
             imagePullPolicy: "IfNotPresent"
             command:
             - cat
-      '''
+        '''
     }
   }
   triggers {
     GenericTrigger(
       genericVariables: [
-       [key: 'action', value: '$.action', expressionType: 'JSONPath'],
-       [key: 'clone_url', value: '$.pull_request.base.repo.clone_url', expressionType: 'JSONPath'],
-       [key: 'ref', value: '$.pull_request.head.ref', expressionType: 'JSONPath']
+        [key: 'action', value: '$.action', expressionType: 'JSONPath'],
+        [key: 'clone_url', value: '$.pull_request.base.repo.clone_url', expressionType: 'JSONPath'],
+        [key: 'ref', value: '$.pull_request.head.ref', expressionType: 'JSONPath'],
+        [key: 'sha', value: '$.pull_request.head.sha', expressionType: 'JSONPath']
       ],
       token: 'abc'
     )
@@ -53,7 +54,7 @@ pipeline {
         }
       }
       steps{
-        container('maven') {
+      container('maven') {
           script{
             sh 'mvn test '
           }
@@ -61,7 +62,14 @@ pipeline {
       }
       post {
         failure {
-          sh 'curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/gzroy/webdemo/issues/7/comments -d \'{"body":"UT test failure"}\''
+          sh """
+          (curl -L -X POST \
+          -H \"Accept: application/vnd.github+json\" \
+          -H \"Authorization: Bearer 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\" \
+          -H \"X-GitHub-Api-Version: 2022-11-28\" \
+          https://api.github.com/repos/gzroy/webdemo/issues/7/comments \
+          -d \'{\"body\": \"UT test failure\"}\')
+          """
         }
         success {
           echo 'unit test success!'
