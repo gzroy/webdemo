@@ -72,7 +72,7 @@ pipeline {
           """
         }
         success {
-          echo 'unit test success!'
+          echo 'unit test successa!'
         }
       }
     }
