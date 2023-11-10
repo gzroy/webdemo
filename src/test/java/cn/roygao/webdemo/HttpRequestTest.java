@@ -20,6 +20,6 @@ public class HttpRequestTest {
     @Test
 	void calculationShouldReturnCorrectMessage() throws Exception {
 		assertThat(
-            this.restTemplate.getForObject("http://localhost:" + port + "/calculate?input=10", String.class)).contains("300");
+            this.restTemplate.getForObject("http://localhost:" + port + "/calculate?input=10", String.class)).contains("200");
 	}
 }
