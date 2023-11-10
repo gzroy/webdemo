@@ -21,7 +21,9 @@ pipeline {
         [key: 'action', value: '$.action', expressionType: 'JSONPath'],
         [key: 'clone_url', value: '$.pull_request.base.repo.clone_url', expressionType: 'JSONPath'],
         [key: 'ref', value: '$.pull_request.head.ref', expressionType: 'JSONPath'],
-        [key: 'sha', value: '$.pull_request.head.sha', expressionType: 'JSONPath']
+        [key: 'sha', value: '$.pull_request.head.sha', expressionType: 'JSONPath'],
+        [key: 'number', value: '$.number', expressionType: 'JSONPath'],
+        [key: 'comments_url', value: '$.pull_request.comments_url', expressionType: 'JSONPath']
       ],
       token: 'abc'
     )
@@ -34,7 +36,7 @@ pipeline {
     stage("git checkout") {
       when {
         expression {
-          return action=="opened" || action=="updated"
+          return action=="opened" || action=="synchronize"
         }
       }
       steps {
@@ -50,7 +52,7 @@ pipeline {
     stage("test"){
       when {
         expression {
-          return action=="opened" || action=="updated"
+          return action=="opened" || action=="synchronize"
         }
       }
       steps{
@@ -65,10 +67,10 @@ pipeline {
           sh """
           (curl -L -X POST \
           -H \"Accept: application/vnd.github+json\" \
-          -H \"Authorization: Bearer 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\" \
+          -H \"Authorization: Bearer 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\" \
           -H \"X-GitHub-Api-Version: 2022-11-28\" \
-          https://api.github.com/repos/gzroy/webdemo/issues/7/comments \
-          -d \'{\"body\": \"UT test failure\"}\')
+          ${comments_url} \
+          -d \'{\"body\": \"UT test failure for commit ${sha}\"}\')
           """
         }
         success {
